@@ -1,0 +1,16 @@
+com\bazarSpringBoot\demo\Repository\ClienteRepository.class
+com\bazarSpringBoot\demo\Model\Venta.class
+com\bazarSpringBoot\demo\Service\IVentaService.class
+com\bazarSpringBoot\demo\Service\IClienteService.class
+com\bazarSpringBoot\demo\Controller\VentaController.class
+com\bazarSpringBoot\demo\BazarSpringBootApplication.class
+com\bazarSpringBoot\demo\Service\ClienteService.class
+com\bazarSpringBoot\demo\Service\ProductoService.class
+com\bazarSpringBoot\demo\Model\Cliente.class
+com\bazarSpringBoot\demo\Repository\ProductoRepository.class
+com\bazarSpringBoot\demo\Service\IProductoService.class
+com\bazarSpringBoot\demo\Controller\ClienteController.class
+com\bazarSpringBoot\demo\Service\VentaService.class
+com\bazarSpringBoot\demo\Repository\VentaRepository.class
+com\bazarSpringBoot\demo\Controller\ProductoController.class
+com\bazarSpringBoot\demo\Model\Producto.class
