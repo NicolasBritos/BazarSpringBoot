@@ -23,11 +23,12 @@ public class Venta {
       @Id
     @GeneratedValue (strategy=GenerationType.SEQUENCE)
     private Long codigo_venta;
-    private LocalDate fecha_venta;
-    private Double total;
-    @ManyToMany
+    private LocalDate fecha_venta = LocalDate.now();
+    private Double total;      
+       @ManyToMany
     private List<Producto> listaProductos;
     
+   
     @JoinTable(
             name = "venta_producto", 
             joinColumns = @JoinColumn (name = "codigo_venta", nullable = false),
@@ -37,6 +38,9 @@ public class Venta {
     @OneToOne
     private Cliente unCliente;
 
+    
+    
+  
     
     
     public Venta() {

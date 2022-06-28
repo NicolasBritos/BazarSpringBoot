@@ -2,6 +2,7 @@ package com.bazarSpringBoot.demo.Service;
 
 import com.bazarSpringBoot.demo.Model.Producto;
 import com.bazarSpringBoot.demo.Repository.ProductoRepository;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,12 +51,39 @@ public class ProductoService implements IProductoService {
     @Override
     public void editProducto(Long codigo_producto, Long nuevoCodigo, String nuevoNombre, String nuevaMarca, Double nuevoCosto, Double nuevaCantidad) {
         Producto producto = this.findProducto(codigo_producto);
-        producto.setCodigo_producto(nuevoCodigo);
+        if (nuevoCodigo != null){
+        producto.setCodigo_producto(nuevoCodigo);                  // Se controla que los parámetros no estén vacíos para seterlos, de lo contrario, se mantienen.
+        }
+        if (nuevoNombre != null){
         producto.setNombre(nuevoNombre);
+        }
+        if (nuevaMarca != null){
         producto.setMarca(nuevaMarca);
+        }
+        if (nuevoCosto != null){
         producto.setCosto(nuevoCosto);
+        }
+        if (nuevaCantidad != null){
         producto.setCantidad_disponible(nuevaCantidad);
-                     
+        }                     
         this.saveProducto(producto);
     }
+    
+    
+
+    @Override
+    public List<Producto> getLowStock() {
+        List<Producto> lista = this.getProductos();
+        List<Producto> low = new ArrayList();
+        for (Producto prod : lista){
+        if (prod.getCantidad_disponible() < 5){
+          low.add(prod);                                           // Arma una nueva lista con los productos que tengan menos de 5 unidades.
+          }
+           
+        }       
+               return low;
+}
+    
+    
+
 }

@@ -1,5 +1,7 @@
 package com.bazarSpringBoot.demo.Controller;
 
+import com.bazarSpringBoot.demo.Dto.TotalVentasDTO;
+import com.bazarSpringBoot.demo.Dto.VentaMayorDTO;
 import com.bazarSpringBoot.demo.Model.Cliente;
 import com.bazarSpringBoot.demo.Model.Producto;
 import com.bazarSpringBoot.demo.Model.Venta;
@@ -32,9 +34,9 @@ public class VentaController {
 
     @PostMapping("/crear")
     public String createVenta(@RequestBody Venta venta) {
-
+      
         iVenta.saveVenta(venta);
-
+                
         return "Venta creado correctamente";
 
     }
@@ -47,7 +49,7 @@ public class VentaController {
     }
 
     @GetMapping("/buscar")
-    public Venta findVenta(Long codigo_venta) {
+    public Venta findVenta(@RequestParam Long codigo_venta) {
 
         return iVenta.findVenta(codigo_venta);
 
@@ -64,11 +66,11 @@ public class VentaController {
 
     @PutMapping("/editar/{codigo_venta_original}")
     public Venta editVenta(@PathVariable Long codigo_venta_original,
-            @RequestParam(required = false, name = "nuevo_codigo_venta") Long nuevoCodigo,
-            @RequestParam(required = false, name = "fecha") LocalDate nuevaFecha,
-            @RequestParam(required = false, name = "total") Double nuevoTotal,
-            @RequestParam(required = false, name = "lista") List<Producto>  nuevaLista,
-            @RequestParam(required = false, name = "cliente") Cliente nuevoCliente)
+            @RequestParam(required = false) Long nuevoCodigo,
+            @RequestParam(required = false) LocalDate nuevaFecha,
+            @RequestParam(required = false) Double nuevoTotal,
+            @RequestParam(required = false) List<Producto>  nuevaLista,
+            @RequestParam(required = false) Cliente nuevoCliente)
     {
 
          iVenta.editVenta(codigo_venta_original, nuevoCodigo, nuevaFecha, nuevoTotal, nuevaLista, nuevoCliente);
@@ -77,6 +79,31 @@ public class VentaController {
 
         return venta;
     }
+    
+    @GetMapping ("/productos-venta")
+    public List <Producto> productosVenta (@RequestParam Long codigo_venta){
+        
+        return iVenta.productosVenta(codigo_venta);
+                
+    }
+    
+   
+    @GetMapping ("/ventas-diarias")
+    public TotalVentasDTO ventasDiarias (@RequestParam String fecha){
+                       
+        return iVenta.ventasDiarias(fecha);
+        
+    }
+    
+    
+    @GetMapping ("/venta-mayor")
+    
+    public VentaMayorDTO ventaMayor (){
+        
+        return iVenta.ventaMayor();
+        
+    }
+    
     
     
     

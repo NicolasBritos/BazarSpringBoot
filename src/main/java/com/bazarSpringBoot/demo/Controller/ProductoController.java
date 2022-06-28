@@ -44,7 +44,7 @@ public class ProductoController {
     }
 
     @GetMapping("/buscar")
-    public Producto findProducto(Long codigo_producto) {
+    public Producto findProducto(@RequestParam Long codigo_producto) {
 
         return iProducto.findProducto(codigo_producto);
 
@@ -59,20 +59,29 @@ public class ProductoController {
 
     }
 
-    @PutMapping("/editar/{codigo_producto_original}")
-    public Producto editProducto(@PathVariable Long codigo_producto_original,
-            @RequestParam(required = false, name = "nuevo_codigo_producto") Long nuevoCodigo,
-            @RequestParam(required = false, name = "nombre") String nuevoNombre,
-             @RequestParam(required = false, name = "marca") String nuevaMarca,
-               @RequestParam(required = false, name = "costo") Double nuevoCosto,
-            @RequestParam(required = false, name = "cantidad") Double nuevaCantidad)
+    @PutMapping("editar/{codigo_producto}")
+    public Producto editProducto(@PathVariable Long codigo_producto,
+            @RequestParam(required = false) Long nuevoCodigo,
+            @RequestParam(required = false) String nuevoNombre,
+            @RequestParam(required = false) String nuevaMarca,
+            @RequestParam(required = false) Double nuevoCosto,
+            @RequestParam(required = false) Double nuevaCantidad)
     {
 
-         iProducto.editProducto(codigo_producto_original, nuevoCodigo, nuevoNombre,nuevaMarca, nuevoCosto, nuevaCantidad);
+         iProducto.editProducto(codigo_producto, nuevoCodigo, nuevoNombre,nuevaMarca, nuevoCosto, nuevaCantidad);
 
-        Producto producto = iProducto.findProducto(codigo_producto_original);
+        Producto producto = iProducto.findProducto(codigo_producto);
 
         return producto;
     }
+    
+    
+    @GetMapping ("/listar-bajo-stock")
+     public List <Producto> listarBajoStock(){
+       
+       return iProducto.getLowStock();
+        
+    }
+     
     
 }

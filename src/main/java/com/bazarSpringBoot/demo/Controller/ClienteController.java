@@ -38,7 +38,7 @@ public class ClienteController {
     }
 
     @GetMapping("/buscar")
-    public Cliente findCliente(Long id) {
+    public Cliente findCliente(@RequestParam Long id) {
 
         return iCliente.findCliente(id);
 
@@ -55,10 +55,10 @@ public class ClienteController {
 
     @PutMapping("/editar/{id_original}")
     public Cliente editCliente(@PathVariable Long id_original,
-            @RequestParam(required = false, name = "nuevo_id") Long nuevoId,
-            @RequestParam(required = false, name = "nombre") String nuevoNombre,
-            @RequestParam(required = false, name = "apellido") String nuevoApellido,
-            @RequestParam(required = false, name = "dni") String nuevoDni) {
+            @RequestParam(required = false) Long nuevoId,
+            @RequestParam(required = false) String nuevoNombre,
+            @RequestParam(required = false) String nuevoApellido,
+            @RequestParam(required = false) String nuevoDni) {
 
          iCliente.editCliente(id_original, nuevoId, nuevoNombre, nuevoApellido, nuevoDni);
 

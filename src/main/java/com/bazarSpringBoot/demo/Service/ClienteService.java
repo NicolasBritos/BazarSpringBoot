@@ -50,10 +50,18 @@ public class ClienteService implements IClienteService {
     public void editCliente(Long id_cliente, Long nuevoId, String nuevoNombre, String nuevoApellido, String nuevoDni) {
 
        Cliente cliente =  this.findCliente(id_cliente);
+       if (nuevoId != null){                                        // Se controla que los parámetros no sean null para setearlos, de lo contrario se mantiene.
        cliente.setId_cliente(nuevoId);
+       }
+       if (nuevoApellido != null){
        cliente.setApellido(nuevoApellido);
+       }
+       if (nuevoNombre != null){
        cliente.setNombre(nuevoNombre);
+       }
+       if (nuevoDni != null){
        cliente.setDni(nuevoDni);
+       }
        this.saveCliente(cliente);
     }
     
