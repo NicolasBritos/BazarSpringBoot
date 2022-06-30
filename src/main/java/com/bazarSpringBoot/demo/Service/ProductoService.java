@@ -21,8 +21,14 @@ public class ProductoService implements IProductoService {
     public List<Producto> getProductos() {
         
         List <Producto> productos = productoRepository.findAll();
+        List <Producto> aux = new ArrayList();               
+        for ( Producto prod : productos){                                                 /*Utiliza una lista auxiliar para seleccionar  solo los productos que no fueron eliminados*/
+            if (prod.getBorrado() == false){
+                aux.add(prod);
+            }
+        }
         
-        return productos;
+        return aux;
     }
 
     @Override
