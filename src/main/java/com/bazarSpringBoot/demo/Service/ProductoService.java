@@ -1,6 +1,7 @@
 package com.bazarSpringBoot.demo.Service;
 
 import com.bazarSpringBoot.demo.Model.Producto;
+import com.bazarSpringBoot.demo.Model.Venta;
 import com.bazarSpringBoot.demo.Repository.ProductoRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public class ProductoService implements IProductoService {
     
     @Autowired
     private ProductoRepository productoRepository;
-
+    
     @Override
     public List<Producto> getProductos() {
         
@@ -34,8 +35,9 @@ public class ProductoService implements IProductoService {
 
     @Override
     public void deleteProducto(Long id) {
-    
+       
     productoRepository.deleteById(id);
+    
         
     }
 

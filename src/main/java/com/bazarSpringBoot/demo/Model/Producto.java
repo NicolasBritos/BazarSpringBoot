@@ -1,6 +1,7 @@
 package com.bazarSpringBoot.demo.Model;
 
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,14 +11,16 @@ import lombok.Setter;
 
 
 
+
 /**
  *
  * @author Britos
  */
 @Getter @Setter
 @Entity
-public class Producto {
+public class Producto implements Serializable {
     @Id
+     
     @GeneratedValue (strategy=GenerationType.SEQUENCE)
     private Long codigo_producto;
     private String nombre;

@@ -2,6 +2,7 @@ C:\Users\Britos\Desktop\SpringBoot TodoCode\TPFinal-SpringBoot\BazarSpringBoot\s
 C:\Users\Britos\Desktop\SpringBoot TodoCode\TPFinal-SpringBoot\BazarSpringBoot\src\main\java\com\bazarSpringBoot\demo\Repository\VentaRepository.java
 C:\Users\Britos\Desktop\SpringBoot TodoCode\TPFinal-SpringBoot\BazarSpringBoot\src\main\java\com\bazarSpringBoot\demo\Model\Cliente.java
 C:\Users\Britos\Desktop\SpringBoot TodoCode\TPFinal-SpringBoot\BazarSpringBoot\src\main\java\com\bazarSpringBoot\demo\Service\ClienteService.java
+C:\Users\Britos\Desktop\SpringBoot TodoCode\TPFinal-SpringBoot\BazarSpringBoot\src\main\java\com\bazarSpringBoot\demo\Dto\VentaMayorDTO.java
 C:\Users\Britos\Desktop\SpringBoot TodoCode\TPFinal-SpringBoot\BazarSpringBoot\src\main\java\com\bazarSpringBoot\demo\Repository\ClienteRepository.java
 C:\Users\Britos\Desktop\SpringBoot TodoCode\TPFinal-SpringBoot\BazarSpringBoot\src\main\java\com\bazarSpringBoot\demo\Repository\ProductoRepository.java
 C:\Users\Britos\Desktop\SpringBoot TodoCode\TPFinal-SpringBoot\BazarSpringBoot\src\main\java\com\bazarSpringBoot\demo\Service\IClienteService.java
@@ -14,3 +15,4 @@ C:\Users\Britos\Desktop\SpringBoot TodoCode\TPFinal-SpringBoot\BazarSpringBoot\s
 C:\Users\Britos\Desktop\SpringBoot TodoCode\TPFinal-SpringBoot\BazarSpringBoot\src\main\java\com\bazarSpringBoot\demo\Service\VentaService.java
 C:\Users\Britos\Desktop\SpringBoot TodoCode\TPFinal-SpringBoot\BazarSpringBoot\src\main\java\com\bazarSpringBoot\demo\Controller\VentaController.java
 C:\Users\Britos\Desktop\SpringBoot TodoCode\TPFinal-SpringBoot\BazarSpringBoot\src\main\java\com\bazarSpringBoot\demo\Service\ProductoService.java
+C:\Users\Britos\Desktop\SpringBoot TodoCode\TPFinal-SpringBoot\BazarSpringBoot\src\main\java\com\bazarSpringBoot\demo\Dto\TotalVentasDTO.java

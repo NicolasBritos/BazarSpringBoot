@@ -1,6 +1,7 @@
 package com.bazarSpringBoot.demo.Service;
 
 import com.bazarSpringBoot.demo.Model.Cliente;
+import com.bazarSpringBoot.demo.Model.Venta;
 import com.bazarSpringBoot.demo.Repository.ClienteRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class ClienteService implements IClienteService {
     
     @Autowired
     private ClienteRepository clienteRepository;
+    
+    @Autowired
+    private IVentaService iVentaService;
 
     @Override
     public List<Cliente> getClientes() {
@@ -33,7 +37,14 @@ public class ClienteService implements IClienteService {
 
     @Override
     public void deleteCliente(Long id) {
-      
+        
+        List <Venta> ventas = iVentaService.getVentas();
+        for ( Venta venta : ventas){
+            if (venta.getUnCliente().getId_cliente() == id){                                  //Recorre las Ventas y elimina la correspondiente al Cliente.
+                iVentaService.deleteVenta(venta.getCodigo_venta());       
+            }
+        }
+              
         clienteRepository.deleteById(id);
         
     }

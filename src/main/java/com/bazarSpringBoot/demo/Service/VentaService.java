@@ -37,9 +37,8 @@ public class VentaService implements IVentaService {
     public void saveVenta(Venta venta) {
         
             // En este bloque de código, se realiza el cálculo del total, sumando los costos de cada producto existente en la lista.
-          Producto aux;
-          for ( Producto prod : venta.getListaProductos()){                                     //recorre la lista (que es un string del JSON)
-          aux  = productoService.findProducto(prod.getCodigo_producto());        //Obtiene cada producto mediante los ids del List invocando a productService.
+                   for ( Producto prod : venta.getListaProductos()){                                     //recorre la lista (que es un string del JSON)
+          Producto aux  = productoService.findProducto(prod.getCodigo_producto());        //Obtiene cada producto mediante los ids del List invocando a productService.
           venta.setTotal(venta.getTotal() + aux.getCosto());                                // Setea el total sumando los costos.
                     }
           // Fin cálculo del total.
@@ -116,19 +115,20 @@ public class VentaService implements IVentaService {
 
     @Override
     public VentaMayorDTO ventaMayor() {
+         Venta aux = new Venta();
         VentaMayorDTO ventaMayorDTO = new VentaMayorDTO();
         List<Venta> ventas = this.getVentas();
         Double total = ventas.get(0).getTotal();         // se obtiene el total de la primer venta de la lista
-        Venta aux = new Venta();
-        for (Venta venta : ventas) {
-            if (venta.getTotal() > total) {
+         for (Venta venta : ventas) {
+            if (venta.getTotal() >= total) {
                 total = venta.getTotal();                      // Si el total de alguna venta es mayor, se almacena en la variable.
                 aux = venta;                                       // Tambien se almacena el objeto de la venta a la que pertenece el total mayor.
             }
         }
         ventaMayorDTO.setCodigo_venta(aux.getCodigo_venta());
         ventaMayorDTO.setMonto(aux.getTotal());
-        ventaMayorDTO.setCantidad_productos(cantidadProductos(aux));                 //Se utiliza el método cantidadProductos para recorrer la lista de productos y realizar el conteo.
+        total = cantidadProductos(aux);  //Se utiliza el método cantidadProductos para recorrer la lista de productos y realizar el conteo.
+        ventaMayorDTO.setCantidad_productos(total);                 
         ventaMayorDTO.setApellido_cliente(aux.getUnCliente().getApellido());
         ventaMayorDTO.setNombre_cliente(aux.getUnCliente().getNombre());
                 
