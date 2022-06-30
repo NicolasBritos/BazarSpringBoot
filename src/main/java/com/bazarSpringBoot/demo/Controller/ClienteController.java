@@ -46,21 +46,22 @@ public class ClienteController {
 
     @DeleteMapping("/eliminar")
     public String deleteCliente(Long id) {
-
+        
         iCliente.deleteCliente(id);
-
-        return "Cliente eliminado correctamente";
-
+ 
+    return "Cliente eliminado correctamente";
     }
 
+    
     @PutMapping("/editar/{id_original}")
     public Cliente editCliente(@PathVariable Long id_original,
             @RequestParam(required = false) Long nuevoId,
             @RequestParam(required = false) String nuevoNombre,
             @RequestParam(required = false) String nuevoApellido,
-            @RequestParam(required = false) String nuevoDni) {
+            @RequestParam(required = false) String nuevoDni,
+             @RequestParam(required = false) Boolean nuevoBorrado) {
 
-         iCliente.editCliente(id_original, nuevoId, nuevoNombre, nuevoApellido, nuevoDni);
+         iCliente.editCliente(id_original, nuevoId, nuevoNombre, nuevoApellido, nuevoDni,nuevoBorrado);
 
         Cliente cliente = iCliente.findCliente(id_original);
 

@@ -3,6 +3,7 @@ package com.bazarSpringBoot.demo.Model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
+
 
 
 /**
@@ -35,7 +37,7 @@ public class Venta implements Serializable {
         )
     private List<Producto> listaProductos;
        
-    @OneToOne
+    @OneToOne 
                   @JoinColumn (name= "unCliente_id", referencedColumnName="id_cliente")
     private Cliente unCliente;
 

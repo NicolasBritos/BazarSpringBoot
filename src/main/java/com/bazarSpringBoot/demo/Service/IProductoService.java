@@ -18,9 +18,10 @@ public interface IProductoService {
     
     public Producto findProducto (Long id);
     
-    public void editProducto ( Long codigo_producto, Long nuevoCodigo, String nuevoNombre, String nuevaMarca, Double nuevoCosto,  Double nuevaCantidad);
+    public void editProducto ( Long codigo_producto, Long nuevoCodigo, String nuevoNombre, String nuevaMarca, Double nuevoCosto,  Double nuevaCantidad, Boolean borrado);
     
     public List <Producto> getLowStock ();
+
 }
 
     

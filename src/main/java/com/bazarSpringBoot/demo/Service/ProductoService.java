@@ -1,7 +1,6 @@
 package com.bazarSpringBoot.demo.Service;
 
 import com.bazarSpringBoot.demo.Model.Producto;
-import com.bazarSpringBoot.demo.Model.Venta;
 import com.bazarSpringBoot.demo.Repository.ProductoRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +35,11 @@ public class ProductoService implements IProductoService {
     @Override
     public void deleteProducto(Long id) {
        
-    productoRepository.deleteById(id);
-    
-        
+Producto producto = this.findProducto(id);
+producto.setBorrado(Boolean.TRUE);
+  this.saveProducto(producto);
+   
+           
     }
 
     @Override
@@ -51,7 +52,7 @@ public class ProductoService implements IProductoService {
     }
 
     @Override
-    public void editProducto(Long codigo_producto, Long nuevoCodigo, String nuevoNombre, String nuevaMarca, Double nuevoCosto, Double nuevaCantidad) {
+    public void editProducto(Long codigo_producto, Long nuevoCodigo, String nuevoNombre, String nuevaMarca, Double nuevoCosto, Double nuevaCantidad, Boolean borrado) {
         Producto producto = this.findProducto(codigo_producto);
         if (nuevoCodigo != null){
         producto.setCodigo_producto(nuevoCodigo);                  // Se controla que los parámetros no estén vacíos para seterlos, de lo contrario, se mantienen.
@@ -67,6 +68,9 @@ public class ProductoService implements IProductoService {
         }
         if (nuevaCantidad != null){
         producto.setCantidad_disponible(nuevaCantidad);
+        }    
+        if (borrado != null){
+        producto.setBorrado(borrado);
         }                     
         this.saveProducto(producto);
     }
@@ -85,7 +89,6 @@ public class ProductoService implements IProductoService {
         }       
                return low;
 }
-    
     
 
 }

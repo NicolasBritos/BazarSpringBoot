@@ -54,7 +54,7 @@ public class ProductoController {
     public String deleteProducto(Long codigo_producto) {
 
         iProducto.deleteProducto(codigo_producto);
-
+        
         return "Producto eliminado correctamente";
 
     }
@@ -65,10 +65,11 @@ public class ProductoController {
             @RequestParam(required = false) String nuevoNombre,
             @RequestParam(required = false) String nuevaMarca,
             @RequestParam(required = false) Double nuevoCosto,
+            @RequestParam(required = false) Boolean nuevoBorrado,
             @RequestParam(required = false) Double nuevaCantidad)
     {
 
-         iProducto.editProducto(codigo_producto, nuevoCodigo, nuevoNombre,nuevaMarca, nuevoCosto, nuevaCantidad);
+         iProducto.editProducto(codigo_producto, nuevoCodigo, nuevoNombre,nuevaMarca, nuevoCosto, nuevaCantidad, nuevoBorrado);
 
         Producto producto = iProducto.findProducto(codigo_producto);
 

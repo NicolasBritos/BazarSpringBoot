@@ -37,7 +37,7 @@ public class VentaService implements IVentaService {
     public void saveVenta(Venta venta) {
         
             // En este bloque de código, se realiza el cálculo del total, sumando los costos de cada producto existente en la lista.
-                   for ( Producto prod : venta.getListaProductos()){                                     //recorre la lista (que es un string del JSON)
+          for ( Producto prod : venta.getListaProductos()){                                     //recorre la lista (que es un string del JSON)
           Producto aux  = productoService.findProducto(prod.getCodigo_producto());        //Obtiene cada producto mediante los ids del List invocando a productService.
           venta.setTotal(venta.getTotal() + aux.getCosto());                                // Setea el total sumando los costos.
                     }
