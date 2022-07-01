@@ -7,6 +7,7 @@ import com.bazarSpringBoot.demo.Model.Producto;
 import com.bazarSpringBoot.demo.Model.Venta;
 import com.bazarSpringBoot.demo.Repository.VentaRepository;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,30 +23,28 @@ public class VentaService implements IVentaService {
     private VentaRepository ventaRepository;
     
     @Autowired
-    private IProductoService productoService;    // Se instancia IProductoService para usar su método de obtener by id.
-
+    private IProductoService productoService;
+    
     @Override
     public List<Venta> getVentas() {
         
         List <Venta> ventas = ventaRepository.findAll();
         
-        return ventas;        
-        
+        return ventas;
     }
-
+    
     @Override
     public void saveVenta(Venta venta) {
+        venta.setTotal(0.0);
+        for ( Producto prod : venta.getListaProductos()){                                     /*recorre la lista (que es un string del JSON) para calcular el total.*/
+            Producto aux  = productoService.findProducto(prod.getCodigo_producto());      /*Obtiene cada producto mediante los ids del List invocando a productService.*/
+            venta.setTotal(venta.getTotal() + aux.getCosto());                               /*Setea el total sumando el costo de cada producto. */
+        }
+        /* Fin cálculo del total de la venta. */
         
-            // En este bloque de código, se realiza el cálculo del total, sumando los costos de cada producto existente en la lista.
-          for ( Producto prod : venta.getListaProductos()){                                     //recorre la lista (que es un string del JSON)
-          Producto aux  = productoService.findProducto(prod.getCodigo_producto());        //Obtiene cada producto mediante los ids del List invocando a productService.
-          venta.setTotal(venta.getTotal() + aux.getCosto());                                // Setea el total sumando los costos.
-                    }
-          // Fin cálculo del total.
-               
-               ventaRepository.save(venta);
-           }
-
+        ventaRepository.save(venta);
+    }
+    
     
     @Override
     public void deleteVenta(Long id) {
@@ -53,87 +52,85 @@ public class VentaService implements IVentaService {
         ventaRepository.deleteById(id);
         
     }
-
+    
     @Override
     public Venta findVenta(Long id) {
-    
-    Venta venta = ventaRepository.findById(id).orElse(null);
-    
-    return venta;
+        
+        Venta venta = ventaRepository.findById(id).orElse(null);
+        
+        return venta;
         
     }
-
+    
     @Override
-    public void editVenta(Long codigo_venta, Long nuevoCodigo, LocalDate nuevaFecha, Double nuevoTotal, List<Producto> nuevaListaProductos, Cliente nuevoCliente) {
-      Venta venta =  this.findVenta(codigo_venta);
-      if (nuevoCodigo != null){
-       venta.setCodigo_venta(nuevoCodigo);
-      }
-      if (nuevaFecha != null){
-       venta.setFecha_venta(nuevaFecha);
-      }
-      if (nuevoTotal != null){
-       venta.setTotal(nuevoTotal);
-      }
-      if (nuevaListaProductos != null ){
-       venta.setListaProductos(nuevaListaProductos);
-      }
-      if (nuevoCliente != null){
-       venta.setUnCliente(nuevoCliente);
-      }
-       
-       this.saveVenta(venta);
+    public void editVenta(Long codigo_venta, Long nuevoCodigo, LocalDate nuevaFecha, List<Producto> nuevaListaProductos, Cliente nuevoCliente) {
+        Venta venta =  this.findVenta(codigo_venta);
+        if (nuevoCodigo != null){
+            venta.setCodigo_venta(nuevoCodigo);
+        }
+        if (nuevaFecha != null){
+            venta.setFecha_venta(nuevaFecha);
+        }
+         if (nuevaListaProductos != null ){
+            venta.setListaProductos(nuevaListaProductos);
+        }
+        if (nuevoCliente != null){
+            venta.setUnCliente(nuevoCliente);
+        }
+        
+        this.saveVenta(venta);
         
         
         
     }
     
-      @Override
+    @Override
     public List<Producto> productosVenta(Long id) {
         Venta venta = this.findVenta(id);
         List <Producto> lista = venta.getListaProductos();
         return lista;
     }
-
+    
     @Override
     public TotalVentasDTO ventasDiarias(String fecha) {
         List <Venta> ventas = this.getVentas();
         LocalDate fechaParseada;
-        TotalVentasDTO totalVentas = new TotalVentasDTO();                    //Instancia un objeto DTO.
-        fechaParseada = LocalDate.parse(fecha);                                        // Convierte el String Fecha en LocalDate.
-        totalVentas.setFecha(fechaParseada);                                             //Setea la fecha en el DTO.
-            for (Venta venta : ventas){
-              if (venta.getFecha_venta().isEqual(fechaParseada)){
-              totalVentas.setMontoTotal(totalVentas.getMontoTotal() + venta.getTotal());                    //Suma los montos de las ventas realizadas que coinciden con la fecha.
-              totalVentas.setCantidadVentas(totalVentas.getCantidadVentas() + 1);                            // Suma la cantidad de ventas realizadas en la fecha.
-          }
-          
-      }        
+        TotalVentasDTO totalVentas = new TotalVentasDTO();                    /*Instancia un objeto DTO.*/
+        fechaParseada = LocalDate.parse(fecha);                                        /*Convierte el String Fecha en LocalDate.*/
+        totalVentas.setFecha(fechaParseada);                                             /*Setea la fecha en el DTO.*/
+        for (Venta venta : ventas){
+            if (venta.getFecha_venta().isEqual(fechaParseada)){
+                totalVentas.setMontoTotal(totalVentas.getMontoTotal() + venta.getTotal());                    /*Suma los montos de las ventas realizadas que coinciden con la fecha.*/
+                totalVentas.setCantidadVentas(totalVentas.getCantidadVentas() + 1);                            /* Suma la cantidad de ventas realizadas en la fecha.*/
+            }
+            
+        }
         return totalVentas;
         
     }
-
+    
     @Override
     public VentaMayorDTO ventaMayor() {
-         Venta aux = new Venta();
+        Venta aux = new Venta();
         VentaMayorDTO ventaMayorDTO = new VentaMayorDTO();
         List<Venta> ventas = this.getVentas();
-        Double total = ventas.get(0).getTotal();         // se obtiene el total de la primer venta de la lista
-         for (Venta venta : ventas) {
+        Double total = ventas.get(0).getTotal();       /*se obtiene el total de la primer venta de la lista */
+        for (Venta venta : ventas) {
             if (venta.getTotal() >= total) {
-                total = venta.getTotal();                      // Si el total de alguna venta es mayor, se almacena en la variable.
-                aux = venta;                                       // Tambien se almacena el objeto de la venta a la que pertenece el total mayor.
+                total = venta.getTotal();                      /*Si el total de alguna venta es mayor, se reemplaza en la variable.*/
+                aux = venta;                                       /*Tambien se almacena el objeto de la venta a la que pertenece el total mayor.*/
             }
         }
         ventaMayorDTO.setCodigo_venta(aux.getCodigo_venta());
         ventaMayorDTO.setMonto(aux.getTotal());
-        total = cantidadProductos(aux);  //Se utiliza el método cantidadProductos para recorrer la lista de productos y realizar el conteo.
-        ventaMayorDTO.setCantidad_productos(total);                 
+        total = cantidadProductos(aux);                 /*Se utiliza el método cantidadProductos para recorrer la lista de productos y realizar el conteo*/
+        ventaMayorDTO.setCantidad_productos(total);
         ventaMayorDTO.setApellido_cliente(aux.getUnCliente().getApellido());
         ventaMayorDTO.setNombre_cliente(aux.getUnCliente().getNombre());
-                
+        
+        
         return ventaMayorDTO;
-
+        
     }
     
     
@@ -142,13 +139,24 @@ public class VentaService implements IVentaService {
         Double cantidad = 0.0;
         for (Producto listaProducto : listaProductos) {
             cantidad= cantidad + 1;
-        }      
-        return cantidad;
         }
-    
-    
-    
-    
+        return cantidad;
+    }
+
+    @Override
+    public void agregarUnProducto(Long id, Producto unProducto) {
         
-  
+        Venta venta = this.findVenta(id);                                                           /*Método que añade a la lista de productos de la venta obtenida por id un producto y hace el update mediante saveVenta*/
+        List <Producto> listaProductos = venta.getListaProductos();
+        listaProductos.add(unProducto);
+        venta.setListaProductos(listaProductos);
+        this.saveVenta(venta);
+                
+    }
+    
+    
+    
+    
+    
+    
 }

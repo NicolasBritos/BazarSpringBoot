@@ -11,13 +11,15 @@ public interface IClienteService {
     
     public List <Cliente> getClientes();
     
+    public List <Cliente> getClientesBorrados();
+    
     public void saveCliente (Cliente cliente);
     
     public void deleteCliente (Long id);
     
     public Cliente findCliente (Long id);
     
-   public void editCliente (Long id_cliente, Long nuevoId, String nuevoNombre, String nuevoApellido, String nuevoDni, Boolean borrado);
+    public void editCliente (Long id_cliente, Long nuevoId, String nuevoNombre, String nuevoApellido, String nuevoDni, Boolean borrado);
     
     
 }

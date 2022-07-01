@@ -11,7 +11,7 @@ import lombok.Setter;
  *
  * @author Britos
  */
-@Getter @Setter 
+@Getter @Setter
 @Entity
 public class Cliente {
     @Id
@@ -21,16 +21,18 @@ public class Cliente {
     private String apellido;
     private String dni;
     private Boolean borrado= false;
-
+    private String descripcion_estado = "Cliente activo";
+    
     public Cliente() {
     }
-
-    public Cliente(Long id_cliente, String nombre, String apellido, String dni, Boolean borrado) {
+    
+    public Cliente(Long id_cliente, String nombre, String apellido, String dni, Boolean borrado, String descripcion_estado) {
         this.id_cliente = id_cliente;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.borrado = borrado;
+        this.descripcion_estado= descripcion_estado;
     }
     
     

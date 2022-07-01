@@ -29,54 +29,53 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping ("/venta")
 public class VentaController {
     
-            @Autowired
+    @Autowired
     private IVentaService iVenta;
-
+    
     @PostMapping("/crear")
     public String createVenta(@RequestBody Venta venta) {
-      
+        
         iVenta.saveVenta(venta);
-                
+        
         return "Venta creado correctamente";
-
+        
     }
-
+    
     @GetMapping("/listar")
     public List<Venta> listVenta() {
-
+        
         return iVenta.getVentas();
-
+        
     }
-
+    
     @GetMapping("/buscar")
     public Venta findVenta(@RequestParam Long codigo_venta) {
-
+        
         return iVenta.findVenta(codigo_venta);
-
+        
     }
-
+    
     @DeleteMapping("/eliminar")
     public String deleteVenta(Long codigo_venta) {
-
+        
         iVenta.deleteVenta(codigo_venta);
-
+        
         return "Venta eliminado correctamente";
-
+        
     }
-
+    
     @PutMapping("/editar/{codigo_venta_original}")
     public Venta editVenta(@PathVariable Long codigo_venta_original,
             @RequestParam(required = false) Long nuevoCodigo,
             @RequestParam(required = false) LocalDate nuevaFecha,
-            @RequestParam(required = false) Double nuevoTotal,
             @RequestParam(required = false) List<Producto>  nuevaLista,
             @RequestParam(required = false) Cliente nuevoCliente)
     {
-
-         iVenta.editVenta(codigo_venta_original, nuevoCodigo, nuevaFecha, nuevoTotal, nuevaLista, nuevoCliente);
-
+        
+        iVenta.editVenta(codigo_venta_original, nuevoCodigo, nuevaFecha,nuevaLista, nuevoCliente);
+        
         Venta venta = iVenta.findVenta(codigo_venta_original);
-
+        
         return venta;
     }
     
@@ -84,13 +83,13 @@ public class VentaController {
     public List <Producto> productosVenta (@RequestParam Long codigo_venta){
         
         return iVenta.productosVenta(codigo_venta);
-                
+        
     }
     
-   
+    
     @GetMapping ("/ventas-diarias")
     public TotalVentasDTO ventasDiarias (@RequestParam String fecha){
-                       
+        
         return iVenta.ventasDiarias(fecha);
         
     }
@@ -104,6 +103,16 @@ public class VentaController {
         
     }
     
+    
+    @PutMapping ("/agregar-producto")
+    public Venta agregarUnProducto (@RequestParam Long codigo_venta, @RequestParam Producto unProducto){
+        
+         iVenta.agregarUnProducto(codigo_venta, unProducto);
+                  
+        Venta venta = iVenta.findVenta(codigo_venta);
+        
+        return venta;
+    }
     
     
     

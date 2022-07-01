@@ -20,7 +20,7 @@ import lombok.Setter;
 @Entity
 public class Producto implements Serializable {
     @Id
-     
+    
     @GeneratedValue (strategy=GenerationType.SEQUENCE)
     private Long codigo_producto;
     private String nombre;
@@ -28,19 +28,21 @@ public class Producto implements Serializable {
     private Double costo;
     private Double cantidad_disponible;
     private Boolean borrado=false;
-
+    private String descripcion_estado = "Producto existente";
+    
     public Producto() {
     }
-
-    public Producto(Long codigo_producto, String nombre, String marca, Double costo, Double cantidad_disponible, Boolean borrado) {
+    
+    public Producto(Long codigo_producto, String nombre, String marca, Double costo, Double cantidad_disponible, Boolean borrado, String descripcion_estado) {
         this.codigo_producto = codigo_producto;
         this.nombre = nombre;
         this.marca = marca;
         this.costo = costo;
         this.cantidad_disponible = cantidad_disponible;
         this.borrado= borrado;
+        this.descripcion_estado= descripcion_estado;
     }
     
     
-
+    
 }

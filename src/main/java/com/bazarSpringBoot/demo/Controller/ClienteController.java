@@ -17,41 +17,47 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/cliente")
 public class ClienteController {
-
+    
     @Autowired
     private IClienteService iCliente;
-
+    
     @PostMapping("/crear")
     public String createCliente(@RequestBody Cliente cliente) {
-
+        
         iCliente.saveCliente(cliente);
-
+        
         return "Cliente creado correctamente";
-
+        
     }
-
+    
     @GetMapping("/listar")
-    public List<Cliente> listCliente() {
-
+    public List<Cliente> listClientes() {
+        
         return iCliente.getClientes();
-
+        
     }
-
+    
+    @GetMapping("/listar-borrados")
+    public List<Cliente> listClientesBorrados() {
+        
+        return iCliente.getClientesBorrados();
+        
+    }
+    
     @GetMapping("/buscar")
     public Cliente findCliente(@RequestParam Long id) {
-
+        
         return iCliente.findCliente(id);
-
+        
     }
-
+    
     @DeleteMapping("/eliminar")
     public String deleteCliente(Long id) {
         
         iCliente.deleteCliente(id);
- 
-    return "Cliente eliminado correctamente";
+        
+        return "Cliente eliminado correctamente";
     }
-
     
     @PutMapping("/editar/{id_original}")
     public Cliente editCliente(@PathVariable Long id_original,
@@ -59,13 +65,13 @@ public class ClienteController {
             @RequestParam(required = false) String nuevoNombre,
             @RequestParam(required = false) String nuevoApellido,
             @RequestParam(required = false) String nuevoDni,
-             @RequestParam(required = false) Boolean nuevoBorrado) {
-
-         iCliente.editCliente(id_original, nuevoId, nuevoNombre, nuevoApellido, nuevoDni,nuevoBorrado);
-
+            @RequestParam(required = false) Boolean nuevoBorrado) {
+        
+        iCliente.editCliente(id_original, nuevoId, nuevoNombre, nuevoApellido, nuevoDni,nuevoBorrado);
+        
         Cliente cliente = iCliente.findCliente(id_original);
-
+        
         return cliente;
     }
-
+    
 }

@@ -12,6 +12,8 @@ public interface IProductoService {
       
     public List <Producto> getProductos();
     
+    public List <Producto> getProductosBorrados();
+    
     public void saveProducto (Producto producto);
     
     public void deleteProducto (Long id);

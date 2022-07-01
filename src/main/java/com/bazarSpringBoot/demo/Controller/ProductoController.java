@@ -24,41 +24,48 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductoController {
     
     
-        @Autowired
+    @Autowired
     private IProductoService iProducto;
-
+    
     @PostMapping("/crear")
     public String createProducto(@RequestBody Producto producto) {
-
+        
         iProducto.saveProducto(producto);
-
+        
         return "Producto creado correctamente";
-
+        
     }
-
+    
     @GetMapping("/listar")
-    public List<Producto> listProducto() {
-
+    public List<Producto> listProductos() {
+        
         return iProducto.getProductos();
-
+        
     }
-
+    
+    @GetMapping("/listar-borrados")                                       /* Endpoint adicional para listar los productos eliminados utilizando el borrado lógico */
+    public List<Producto> listProductosBorrados() {
+        
+        return iProducto.getProductosBorrados();
+        
+    }
+    
     @GetMapping("/buscar")
     public Producto findProducto(@RequestParam Long codigo_producto) {
-
+        
         return iProducto.findProducto(codigo_producto);
-
+        
     }
-
+    
     @DeleteMapping("/eliminar")
     public String deleteProducto(Long codigo_producto) {
-
+        
         iProducto.deleteProducto(codigo_producto);
         
         return "Producto eliminado correctamente";
-
+        
     }
-
+    
     @PutMapping("editar/{codigo_producto}")
     public Producto editProducto(@PathVariable Long codigo_producto,
             @RequestParam(required = false) Long nuevoCodigo,
@@ -68,21 +75,21 @@ public class ProductoController {
             @RequestParam(required = false) Boolean nuevoBorrado,
             @RequestParam(required = false) Double nuevaCantidad)
     {
-
-         iProducto.editProducto(codigo_producto, nuevoCodigo, nuevoNombre,nuevaMarca, nuevoCosto, nuevaCantidad, nuevoBorrado);
-
+        
+        iProducto.editProducto(codigo_producto, nuevoCodigo, nuevoNombre,nuevaMarca, nuevoCosto, nuevaCantidad, nuevoBorrado);
+        
         Producto producto = iProducto.findProducto(codigo_producto);
-
+        
         return producto;
     }
     
     
     @GetMapping ("/listar-bajo-stock")
-     public List <Producto> listarBajoStock(){
-       
-       return iProducto.getLowStock();
+    public List <Producto> listarBajoStock(){
+        
+        return iProducto.getLowStock();
         
     }
-     
+    
     
 }
